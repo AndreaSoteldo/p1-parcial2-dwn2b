@@ -27,7 +27,9 @@ function adidasProducts() {
 
     this.listProduct = (rowClass, sourceData, category) => {
         let row = document.querySelector(rowClass);
+        row.id= category;
         row.innerHTML = '';
+        console.log(row)
         let html = '';
         this[sourceData][category]?.forEach(product => {
             html += this.buildHTMLCard(product);

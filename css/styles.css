@@ -11,7 +11,38 @@ html {
     scroll-behavior: smooth;
 }
 
+.modal-promocion{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 9999;
+    background: #0000000f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-container{
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
 
+.modal-container img{
+    width: 100%;
+}
+
+.closed-promotion-modal{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 50px;
+    padding: 6px 13px;
+}
 
 .main {
     position: fixed;
@@ -247,7 +278,7 @@ span {
 
 .container-cards {
     position: relative;
-    width: 80%;
+    width: 60%;
     margin: 0 auto;
     padding: 0;
     display: flex;

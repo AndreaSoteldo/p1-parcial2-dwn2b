@@ -48,12 +48,49 @@ function emptyTheCart() {
 }
 
 function openModal(id, category) {
-    const product = products.getById(id, category);
+    let product = products.getById(id, category);
     products.renderModal(product, '.modal-products')
 }
 
 function closeModal() {
     document.querySelector('.modal-products').classList.add('d-none')
+}
+let activeCounter = true
+function handleBanner(e) {
+    let bannerText = e.target.textContent
+
+    let boxBanner = document.querySelector('.modal-promocion')
+
+    if(bannerText && boxBanner){
+      let html = `
+        <div class="modal-container">
+            <button class="closed-promotion-modal">X</button>
+            <img src="./img/${bannerText}.jpg" alt="banner promocional ${bannerText}"/>
+        </div>
+      `
+
+      boxBanner.innerHTML = html
+      boxBanner.classList.remove('d-none')
+
+        let closedModalButton = document.querySelector('.closed-promotion-modal')
+
+        if(closedModalButton){
+
+            console.log('closedModalButton', closedModalButton)
+            closedModalButton.addEventListener('click', () => {
+                boxBanner.classList.add('d-none')
+                activeCounter = false
+                console.log('1', activeCounter)
+            })
+        }
+
+        if(activeCounter){
+            console.log('2', activeCounter)
+            setTimeout(() => {
+                boxBanner.classList.add('d-none')
+            },10000)
+        } 
+    }
 }
 ////////////////////////////////////////
 
@@ -70,6 +107,8 @@ window.onload = function() {
     menuToggle = document.querySelector('.menu-toggle');
     overlay = document.querySelector(".overlay");
     body = document.querySelector("body");
+    let categorias = document.querySelectorAll('.categoria')
+    categorias.forEach(categoria => categoria.addEventListener('click', handleBanner))
     ////////////////////////////////////////////////////
 
     //para agregar objetos al carrito

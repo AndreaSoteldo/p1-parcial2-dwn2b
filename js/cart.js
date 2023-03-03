@@ -6,7 +6,16 @@ function ShoppingCart() {
     }
 
     this.add = function (product) {
-        this.cart.push(product);
+        const findProduct = this.cart.find(prod => prod.id === product.id)
+        if (!findProduct) {
+            const newProduct = {
+                ...product,
+                quantity: 1
+            }
+            this.cart.push(newProduct);   
+        } else {
+            this.cart[this.cart.findIndex(prod => prod.id === findProduct.id)].quantity++
+        }
         localStorage.setItem('cart', JSON.stringify(this.cart));
         this.buildCart('#cart');
         this.cartLength('#cart-length');
@@ -17,6 +26,7 @@ function ShoppingCart() {
         this.cart.forEach(function(product) {
             html += `<li>
                         <div>${product.models} <span>$${product.price}</span></div>
+                        <div>Cantidad: ${product.quantity}</div>
                         <div class="img-trash">
                             <img class="img-cart" src="${product.img}">
                             <a class="trash-btn" onclick='deleteItem("${product.id}", "${product.category}")'><i class="fas fa-trash"></i></a>
@@ -31,7 +41,7 @@ function ShoppingCart() {
         let container = document.querySelector(containerID);
         container.innerHTML = '';
         let html = `
-        <h2>Carrito de compras (${this.cart.length})</h2>
+        <h2>Carrito de compras (${this.cart.length}) Productos</h2>
             <ul class="ul-cart">
                 ${ this.buildCartList() }
             </ul>
@@ -45,7 +55,8 @@ function ShoppingCart() {
     this.cartLength = (containerID) => {
         let span = document.querySelector(containerID);
         span.innerHTML = '';
-        let html = `<span>${this.cart.length}</span><i class="fa fa-shopping-cart" ></i>Cart`
+        let quantityLength = this.cart.reduce((acc, curr) => acc += curr.quantity, 0)
+        let html = `<span>${quantityLength}</span><i class="fa fa-shopping-cart" ></i>Cart`
         return span.innerHTML = html
     }
 
